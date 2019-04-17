@@ -75,7 +75,7 @@ function getCustomer($serviceID,$customerID){
 	));
 	$r =  curl_exec($curl); 
 	curl_close($curl);
-	echo $r;
+	return $r;
  
  }
  
@@ -104,7 +104,7 @@ function getCustomer($serviceID,$customerID){
 	CURLOPT_CUSTOMREQUEST => "POST",
 	));
 	$response =  curl_exec($curl); 
-	print_r(json_decode($response,true));
+	return $response;
  
  }
  
@@ -125,7 +125,7 @@ function getCustomer($serviceID,$customerID){
 			CURLOPT_CUSTOMREQUEST => "POST",
 			CURLOPT_POSTFIELDS => $data,
 		));
-		echo curl_exec($curl);
+		return curl_exec($curl);
  }
  
  function getPurchaseCode($requestID){
@@ -150,7 +150,7 @@ function getCustomer($serviceID,$customerID){
 	CURLOPT_CUSTOMREQUEST => "POST",
 	));
 	$response =  curl_exec($curl); 
-	echo $response;
+	return $response;
  }
  
 }
