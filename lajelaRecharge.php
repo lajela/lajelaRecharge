@@ -104,6 +104,7 @@ function getCustomer($serviceID,$customerID){
 	CURLOPT_CUSTOMREQUEST => "POST",
 	));
 	$response =  curl_exec($curl); 
+	 curl_close($curl);
 	return $response;
  
  }
@@ -125,6 +126,7 @@ function getCustomer($serviceID,$customerID){
 			CURLOPT_CUSTOMREQUEST => "POST",
 			CURLOPT_POSTFIELDS => $data,
 		));
+	         curl_close($curl);
 		return curl_exec($curl);
  }
  
@@ -150,6 +152,7 @@ function getCustomer($serviceID,$customerID){
 	CURLOPT_CUSTOMREQUEST => "POST",
 	));
 	$response =  curl_exec($curl); 
+	curl_close($curl);
 	return $response;
  }
  
