@@ -111,23 +111,24 @@ function getCustomer($serviceID,$customerID){
  
  function getBalance(){
  $host = 'https://recharge.lajela.com/api/balance';
-		$data = array(
-		  'api' => $this->api // API KEY
-		);
+		$api =  $this->api;
 		$curl       = curl_init();
 		curl_setopt_array($curl, array(
 		CURLOPT_URL => $host,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_USERPWD => $username.":" .$password,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => "POST",
-			CURLOPT_POSTFIELDS => $data,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_POST => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_HTTPHEADER => array("Authorization: Bearer $api"),
+		CURLOPT_FOLLOWLOCATION=> true,
+		CURLOPT_MAXREDIRS => 10,   
+		CURLOPT_POSTREDIR => 3,   
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
 		));
-	         curl_close($curl);
+	       
 		return curl_exec($curl);
+		curl_close($curl);
  }
  
  function getPurchaseCode($requestID){
