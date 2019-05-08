@@ -31,7 +31,7 @@ function getCategory(){
  } 
  
 function getCustomer($serviceID,$customerID){
-   return file_get_contents("https://recharge.lajela.com/api/customer?$serviceID=&id=$customerID");
+   return file_get_contents("https://recharge.lajela.com/api/customer?service=$serviceID&id=$customerID");
  }
  
  function getVariation($serviceID,$plan){
