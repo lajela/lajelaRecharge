@@ -16,32 +16,51 @@ class lajelaRecharge{
 *                               Public methods                                 *
 *******************************************************************************/
  
+ function getLink($link){
+		$curl  = curl_init();
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => $link,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_POST => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_FOLLOWLOCATION=> true,
+		CURLOPT_MAXREDIRS => 10,   
+		CURLOPT_POSTREDIR => 3,   
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "GET",
+		));   
+		return  curl_exec($curl);
+		curl_close($curl);
+ }
+ 
+ 
 function getCategory(){
-     return file_get_contents("https://recharge.lajela.com/api/category");
+     return $this->getLink("https://lajela.com/api/category");
  }
  function getSubCategory($categroy){
- return file_get_contents("https://recharge.lajela.com/api/sub-category?category=$categroy");
+ return $this->getLink("https://lajela.com/api/sub-category?category=$categroy");
  }
  function getService($serviceID){
- return file_get_contents("https://recharge.lajela.com/api/service?service=$serviceID");
+ return $this->getLink("https://lajela.com/api/service?service=$serviceID");
  }
  
  function getPlans($serviceID){
-   return file_get_contents("https://recharge.lajela.com/api/plans?service=$serviceID");
+   return $this->getLink("https://lajela.com/api/plans?service=$serviceID");
  } 
  
 function getCustomer($serviceID,$customerID){
-   return file_get_contents("https://recharge.lajela.com/api/customer?service=$serviceID&id=$customerID");
+   return $this->getLink("https://lajela.com/api/customer?service=$serviceID&id=$customerID");
  }
  
  function getVariation($serviceID,$plan){
-   return file_get_contents("https://recharge.lajela.com/api/variation?service=$serviceID&plan=$plan");
+   return $this->getLink("https://lajela.com/api/variation?service=$serviceID&plan=$plan");
  }
  
  function pay($serviceID,$amount,$phone,$customerID="",$plan="",$email="",$requestID="",$test=false){
-    $host = 'http://recharge.lajela.com/api/pay';
+    $host = 'https://lajela.com/api/pay';
 	if($test){
-	  $host = 'https://recharge.lajela.com/api/testpay';
+	  $host = 'https://lajela.com/api/testpay';
 	}
 	if($requestID=="" || empty($requestID)){
 	 $requestID = time()+mt_rand();
@@ -80,9 +99,9 @@ function getCustomer($serviceID,$customerID){
  }
  
  function verifyPayment($requestID,$test=false){
-	$host = 'http://recharge.lajela.com/api/verify';
+	$host = 'https://lajela.com/api/verify';
 	if($test){
-	$host = 'http://recharge.lajela.com/api/testverify';
+	$host = 'https://lajela.com/api/testverify';
 	}
 	$api =  $this->api; //Your API Key
 	$data = array(
@@ -110,7 +129,7 @@ function getCustomer($serviceID,$customerID){
  }
  
  function getBalance(){
- $host = 'https://recharge.lajela.com/api/balance';
+ $host = 'https://lajela.com/api/balance';
 		$api =  $this->api;
 		$curl       = curl_init();
 		curl_setopt_array($curl, array(
@@ -132,7 +151,7 @@ function getCustomer($serviceID,$customerID){
  }
  
  function getPurchaseCode($requestID){
- $host = 'http://recharge.lajela.com/api/purchase-code';
+ $host = 'https://lajela.com/api/purchase-code';
 	$api =  $this->api; //Your API Key
 	$data = array(
 	'requestID' => "$requestID" // For the transaction
